@@ -1,4 +1,7 @@
 import { Component } from 'angular2/core';
+import { Contact } from './contact';
+import { ContactService } from './contact.service';
+import { OnInit } from 'angular2/core';
 
 @Component({
   selector: "contact-list",
@@ -8,14 +11,22 @@ import { Component } from 'angular2/core';
         {{ c.lastName }}<br>
         Email: {{ c.email }}
       </p>
-  `
+  `,
+  providers: [ContactService]
 })
 
-export class ContactListComponent {
-  public contacts = [
-    {id: 1, firstName: 'Drew', lastName: 'Conly', email: 'atconly@gmail.com' },
-    {id: 2, firstName: 'Logan', lastName: 'Schumaker', email: 'ls@aol.com' },
-    {id: 3, firstName: 'Brandon', lastName: 'Eleuterio', email: 'be@me.com' },
-    {id: 4, firstName: 'Drew', lastName: 'Strickland', email: 'dstrick@yahoo.com' }
-  ]
+export class ContactListComponent implements OnInit {
+  constructor(private contactService: ContactService) {
+  }
+    
+  public contacts: Contact[];
+
+  getContacts() {
+    this.contactService.getContacts().then((contacts: Contact[]) => this.contacts);
+  }
+
+  ngOnInit():any {
+    this.getContacts();
+  }
+
 }
