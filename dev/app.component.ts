@@ -1,25 +1,22 @@
-import {Component} from 'angular2/core';
+import { Component } from 'angular2/core';
+import { ContactListComponent } from './contacts/contact-list.component';
 
 @Component({
     selector: 'my-app',
     template: `
         <h1>{{ banner }}</h1>
-        <p class="hover" [class.clicked]="showDetail" (click)="onSelect()" >{{ name }}</p>
+        <p class="hover" [class.clicked]="showDetail" (click)="onSelect()" >{{ title }}</p>
         <input [(ngModel)]="twoWay" type="text">
         <div *ngIf="showDetail">
-          <p>
-            Name: {{ contact.firstName }}
-            {{ contact.lastName }}<br>
-            Email: {{ contact.email }}
-          </p>
-        </div>
+          <contact-list></contact-list>
+        </div>  
         <p>{{ twoWay }}</p>
     `,
+    directives: [ ContactListComponent ]
 })
 export class AppComponent {
     public banner = 'Angular 2 Boilerplate';
-    public name = 'Hello World';
-    public contact = { firstName: 'Drew', lastName: 'Conly', email: 'atconly@gmail.com' }
+    public title = 'Contacts';
     public showDetail = false;
     public twoWay = "";
 
